@@ -15,6 +15,7 @@ SPISlave device(PD_4, PD_3, PD_1, PD_0);  // mosi, miso, sclk, cs; PMOD pins
 DigitalOut led(LED3);
 
 int note = 0x01;
+int length = 0x01;
 
 int slave() {
     device.format(8, 3);
@@ -52,6 +53,7 @@ void master() {
         printf("New chapter starts from here.\n");
 
         int response = spi.write(note);  // Send type of mode
+        response = spi.write(length);    // Send type of length
         cs = 1;                          // Deselect the device
         ThisThread::sleep_for(100ms);    // Wait for debug print
         printf("First response from slave = %d\n", response);
